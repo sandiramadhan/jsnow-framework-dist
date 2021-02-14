@@ -1,0 +1,37 @@
+import { Router } from 'express';
+import Header from "../configs/VerifyHeader";
+import UserRouter from './masters/users';
+import LoginRouter from './auth/login';
+import global = require('../helpers/global');
+__ROUTERIMPORTS__
+
+class MainRouter {
+  private _router = Router();
+  private _loginRouter = LoginRouter;
+  private _userRouter = UserRouter;
+  private _globalHelper = global;
+  private _header = Header;
+  __ROUTERALIAS__
+
+  get router() {
+    return this._router;
+  }
+  constructor() {
+    this._configure();
+  }
+  private _configure() {
+    /*
+      /login and /userExample is default routes for your example
+      you can delete it if you want
+    */
+    this._router.use('/login', this._header.initWithoutAuthroize, this._loginRouter);
+    this._router.use('/userExample', this._header.initWithAuthorize, this._userRouter);
+    __ROUTERINITS__
+    
+    // handle undefined routes
+    this._router.use("*", (req, res, next) => {
+      this._globalHelper.setMessage(res, 404, 'Page is not found');
+    });
+  }
+}
+export = new MainRouter().router;

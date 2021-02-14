@@ -1,0 +1,66 @@
+import builder from './../helpers/queryBuilder';
+
+class __MODELNAME__ {
+  async get__FUNCTIONPREFIX__() {
+    try {
+      return await builder.get(
+        '__TABLENAME__',__FIELDS__
+      )
+    } catch (error) {
+      throw error;
+    }
+  }
+  async get__FUNCTIONPREFIX__ManualExample() {
+    try {
+      return await builder.manual(`
+        SELECT __FIELDSMANUAL__
+        FROM __TABLENAME__ 
+      `);
+    } catch (error) {
+      throw error;
+    }
+  }
+  async get__FUNCTIONPREFIX__ById(id: String) {
+    try {
+      return await builder.getOne(
+        '__TABLENAME__',__FIELDS__
+      )
+    } catch (error) {
+      throw error;
+    }
+  }
+  async get__FUNCTIONPREFIX__ById_simple(id: string) {
+    try {
+      return await builder.getOne(
+        '__TABLENAME__',__FIELDS__,
+        {
+          id: id
+        }
+      )
+    } catch (error) {
+      throw error;
+    }
+  }
+  async insert__FUNCTIONPREFIX__(data: any) {
+    try {
+      return await builder.insert('__TABLENAME__', data);
+    } catch (error) {
+      throw error;
+    }
+  }
+  async update__FUNCTIONPREFIX__(data: any, conditions: any) {
+    try {
+      return await builder.update('__TABLENAME__', data, conditions);
+    } catch (error) {
+      throw error;
+    }
+  }
+  async delete__FUNCTIONPREFIX__(conditions: any) {
+    try {
+      return await builder.delete('__TABLENAME__', conditions);
+    } catch (error) {
+      throw error;
+    }
+  }
+}
+export = new __MODELNAME__();

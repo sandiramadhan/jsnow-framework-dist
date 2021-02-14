@@ -1,0 +1,82 @@
+import { Request, Response, Router } from 'express';
+import globalHelper from './../helpers/global';
+import __MODELNAME__ from './../models/__MODELNAMEFILE__';
+
+class __ROUTERNAME__ {
+  private _router = Router();
+  private __MODELNAMEALIAS__ = __MODELNAME__;
+  private _globalHelper = globalHelper;
+  private initialize_fields: {[k:string]: any} = __INITIALIZE_FIELDS__
+  get router() {
+    return this._router;
+  }
+  constructor() {
+    this._configure();
+  }
+  private _configure() {
+    this._router.get('/', async (req: Request, res: Response) => {
+      try {
+        var data = await this.__MODELNAMEALIAS__.get__FUNCTIONPREFIX__();
+        this._globalHelper.setMessage(res, 200, 'Request success', data);
+      } catch (error) {
+        this._globalHelper.setMessage(res, 500, this._globalHelper.displayError(error));
+      }
+    });
+    this._router.get('/:id', async (req: Request, res: Response) => {
+      try {
+        let data:any = await this.__MODELNAMEALIAS__.get__FUNCTIONPREFIX__ById(this._globalHelper.xss(req.params.id));
+        if (Object.keys(data).length > 0) {
+          this._globalHelper.setMessage(res, 200, 'Request success', data);
+        } else {
+          this._globalHelper.setMessage(res, 400, 'Data does not exist');
+        }
+      } catch (error) {
+        this._globalHelper.setMessage(res, 500, this._globalHelper.displayError(error));
+      }
+    });
+    this._router.post('/', async (req: Request, res: Response) => {
+      try {
+        const resp: any = this._globalHelper.getRequestData(req, this.initialize_fields);
+        if (resp.errors.length <= 0) {
+          let data: any = resp.data;
+          await this.__MODELNAMEALIAS__.insert__FUNCTIONPREFIX__(data);
+          this._globalHelper.setMessage(res, 200, '__FUNCTIONPREFIX__ is successfully inserted', data.id);
+        } else {
+          this._globalHelper.setMessage(res, 400, 'Error validation', resp.errors);
+        }
+      } catch (error) {
+        this._globalHelper.setMessage(res, 500, this._globalHelper.displayError(error));
+      }
+    });
+    this._router.put('/', async (req: Request, res: Response) => {
+      try {
+        const resp: any = this._globalHelper.getRequestData(req, this.initialize_fields);
+        if (resp.errors.length <= 0) {
+          let data:any = resp.data;
+          let mainId = data.__PRIMARYKEY__;
+          await this.__MODELNAMEALIAS__.update__FUNCTIONPREFIX__(data, {id: mainId});
+          this._globalHelper.setMessage(res, 200, '__FUNCTIONPREFIX__ is successfully updated');
+        } else {
+          this._globalHelper.setMessage(res, 400, 'Error validation', resp.errors);
+        }
+      } catch(error) {
+        this._globalHelper.setMessage(res, 500, this._globalHelper.displayError(error));
+      }
+    });
+    this._router.delete('/:id', async(req: Request, res: Response) => {
+      try {
+        if(req.params.id) {
+          await this.__MODELNAMEALIAS__.delete__FUNCTIONPREFIX__({
+            id: this._globalHelper.xss(req.params.id)
+          });
+          this._globalHelper.setMessage(res, 200, '__FUNCTIONPREFIX__ is successfully deleted');
+        } else {
+          this._globalHelper.setMessage(res, 400, 'Missing parameter');
+        }
+      } catch (error) {
+        this._globalHelper.setMessage(res, 500, this._globalHelper.displayError(error));
+      }
+    });
+  }
+}
+export = new __ROUTERNAME__().router;
