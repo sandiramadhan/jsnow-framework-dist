@@ -1,0 +1,14 @@
+import {
+  MutationCreateItemArgs,
+  MutationUpdateItemArgs,
+  MutationDeleteItemArgs
+} from '../src/graphql/graphql-types';
+import builder from '../src/helpers/queryBuilder';
+import global from '../src/helpers/global';
+
+export const resolvers = {
+  Query: {
+    __QUERYLIST__
+  },
+  Mutation: {}
+};
