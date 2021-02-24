@@ -1,7 +1,5 @@
 import {
-  MutationCreateItemArgs,
-  MutationUpdateItemArgs,
-  MutationDeleteItemArgs
+  __MUTATIONIMPORT__
 } from './graphql-types';
 import builder from '../helpers/queryBuilder';
 import global from '../helpers/global';
