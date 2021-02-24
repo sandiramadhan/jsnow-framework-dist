@@ -2,9 +2,9 @@ import {
   MutationCreateItemArgs,
   MutationUpdateItemArgs,
   MutationDeleteItemArgs
-} from '../src/graphql/graphql-types';
-import builder from '../src/helpers/queryBuilder';
-import global from '../src/helpers/global';
+} from './graphql-types';
+import builder from '../helpers/queryBuilder';
+import global from '../helpers/global';
 
 export const resolvers = {
   Query: {
