@@ -10,5 +10,7 @@ export const resolvers = {
   Query: {
     __QUERYLIST__
   },
-  Mutation: {}
+  Mutation: {
+    __MUTATIONLIST__
+  }
 };
